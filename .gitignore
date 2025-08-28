@@ -1,0 +1,59 @@
+# =========================
+# General
+# =========================
+.DS_Store
+*.log
+*.tmp
+*.swp
+*.swo
+*.swn
+*.bak
+
+# =========================
+# Node / Frontend
+# =========================
+frontend/node_modules
+frontend/.parcel-cache
+frontend/dist
+frontend/.next
+frontend/out
+frontend/.vite
+frontend/.vercel
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# =========================
+# Python / Backend
+# =========================
+backend/__pycache__/
+backend/.venv
+backend/.env
+backend/.env.*
+backend/.pytest_cache
+backend/.mypy_cache
+backend/.coverage
+backend/htmlcov
+backend/.DS_Store
+backend/.env
+
+# =========================
+# Firebase Keys (IMPORTANT)
+# =========================
+backend/firebase-admin-key.json
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+*.iml
+
+# =========================
+# System
+# =========================
+*.lock
+*.pid
+*.seed
+*.cover
+*.orig

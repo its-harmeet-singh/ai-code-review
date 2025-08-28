@@ -1,0 +1,64 @@
+# =========================
+# Line endings (force LF on checkout)
+# =========================
+* text=auto eol=lf
+
+# =========================
+# Python (backend)
+# =========================
+*.py text diff=python
+*.pyw text diff=python
+*.ipynb text
+
+# =========================
+# JavaScript / TypeScript (frontend)
+# =========================
+*.js   text diff=javascript
+*.jsx  text diff=javascript
+*.ts   text diff=typescript
+*.tsx  text diff=typescript
+
+# =========================
+# Config / Data files
+# =========================
+*.json text
+*.yaml text
+*.yml  text
+*.toml text
+*.md   text
+*.txt  text
+*.csv  text
+*.env  text
+
+# =========================
+# Shell / Scripts
+# =========================
+*.sh   text eol=lf
+*.bat  text eol=crlf
+*.ps1  text
+
+# =========================
+# CI/CD + Infra
+# =========================
+*.yml text
+*.yaml text
+Dockerfile text
+.dockerignore text
+
+# =========================
+# Documentation
+# =========================
+*.md   text
+*.rst  text
+
+# =========================
+# GitHub Linguist overrides
+# (forces detection for repo stats)
+# =========================
+*.py linguist-language=Python
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.js linguist-language=JavaScript
+*.jsx linguist-language=JavaScript
+*.css linguist-language=CSS
+*.html linguist-language=HTML

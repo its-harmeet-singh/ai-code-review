@@ -1,0 +1,60 @@
+name: backend-ci
+
+on:
+  push:
+    paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+  pull_request:
+    paths: ["backend/**", ".github/workflows/backend-ci.yml"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: backend-${{ github.ref }}
+      cancel-in-progress: true
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            backend/requirements.txt
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install deps (tolerate empty/partial file)
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt || true; fi
+          # base runtime deps you mentioned
+          pip install fastapi "uvicorn[standard]" firebase-admin google-auth openai httpx python-multipart
+          # light dev tools (optional but useful)
+          pip install pytest ruff mypy types-requests types-setuptools || true
+
+      - name: Lint (ruff) — non-blocking first run
+        run: ruff check . || true
+
+      - name: Type check (mypy) — non-blocking
+        run: mypy . || true
+
+      - name: Tests (placeholder)
+        run: |
+          echo "✅ backend lint/test placeholder"
+          # When ready:
+          # pytest -q --maxfail=1 --disable-warnings
+
+      - name: Upload test artifacts (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-logs
+          path: |
+            backend/.ruff_cache
+            backend/.mypy_cache
+            backend/.pytest_cache
+          if-no-files-found: ignore
