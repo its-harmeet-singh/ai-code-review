@@ -74,3 +74,29 @@ export async function getJob(jobId: string) {
   }
   return res.json();
 }
+
+export async function listProjects(limit = 20) {
+  const res = await fetch(`/api/projects?limit=${limit}`, await withAuth({ method: "GET" }));
+  if (!res.ok) throw new Error(await res.text());
+  return res.json(); // { items: [...] }
+}
+
+export async function listJobs(opts?: { projectId?: string; limit?: number }) {
+  const q = new URLSearchParams();
+  if (opts?.projectId) q.set("projectId", opts.projectId);
+  if (opts?.limit) q.set("limit", String(opts.limit));
+  const res = await fetch(`/api/jobs?${q.toString()}`, await withAuth({ method: "GET" }));
+  if (!res.ok) throw new Error(await res.text());
+  return res.json(); // { items: [...] }
+}
+
+export async function importGithub(repoUrl: string, branch: string = "main", name?: string) {
+  const body: any = { repoUrl, branch };
+  if (name) body.name = name;
+  const res = await fetch(`/api/projects/github`, await withAuth({
+    method: "POST",
+    body: JSON.stringify(body),
+  }));
+  if (!res.ok) throw new Error(await res.text());
+  return res.json() as Promise<{ projectId: string; jobId: string; status: string }>;
+}
