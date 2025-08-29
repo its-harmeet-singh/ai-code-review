@@ -8,3 +8,7 @@ AI-powered code review assistant that scans repos, runs static analysis, and gen
 TO RUN BACKEND
 
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+TO RUN FRONTEND
+
+npm run dev
