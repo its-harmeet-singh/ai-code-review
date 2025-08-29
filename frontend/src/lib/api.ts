@@ -100,3 +100,10 @@ export async function importGithub(repoUrl: string, branch: string = "main", nam
   if (!res.ok) throw new Error(await res.text());
   return res.json() as Promise<{ projectId: string; jobId: string; status: string }>;
 }
+
+export async function getProjectFile(projectId: string, path: string) {
+  const qs = new URLSearchParams({ path });
+  const res = await fetch(`/api/projects/${projectId}/file?${qs.toString()}`, await withAuth({ method: "GET" }));
+  if (!res.ok) throw new Error(await res.text());
+  return res.json() as Promise<{ path: string; language: string; content: string }>;
+}
